@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Swipe Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pokemon_game.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="game-header">
+            <h1>Pokemon Swipe Game</h1>
+            <div class="game-stats">
+                <div class="stat">
+                    <span class="stat-label">Round</span>
+                    <span class="stat-value" id="current-round">{{ game_state.current_round }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Remaining</span>
+                    <span class="stat-value" id="remaining-count">{{ game_state.remaining_pokemon|length }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Passed</span>
+                    <span class="stat-value" id="passed-count">{{ game_state.passed_pokemon|length }}</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="game-area">
+            <div class="card-container" id="card-container">
+                <div class="pokemon-card" id="pokemon-card">
+                    <div class="card-content">
+                        <div class="pokemon-image-container">
+                            <img id="pokemon-image" src="" alt="Pokemon" class="pokemon-image">
+                        </div>
+                        <div class="pokemon-info">
+                            <h2 id="pokemon-name" class="pokemon-name">Loading...</h2>
+                            <p id="pokemon-id" class="pokemon-id">#000</p>
+                        </div>
+                    </div>
+                    <div class="card-overlay pass-overlay">
+                        <span>PASS</span>
+                    </div>
+                    <div class="card-overlay smash-overlay">
+                        <span>SMASH</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="action-btn pass-btn" id="pass-btn">
+                    <span class="btn-icon">👎</span>
+                    <span class="btn-text">Pass</span>
+                </button>
+                <button class="action-btn smash-btn" id="smash-btn">
+                    <span class="btn-icon">💥</span>
+                    <span class="btn-text">Smash</span>
+                </button>
+            </div>
+        </main>
+
+        <div class="round-complete-modal" id="round-complete-modal">
+            <div class="modal-content">
+                <h2>Round Complete!</h2>
+                <p id="round-summary"></p>
+                <div class="modal-buttons">
+                    <button class="modal-btn next-round-btn" id="next-round-btn">Next Round</button>
+                    <button class="modal-btn reset-btn" id="reset-btn">Reset Game</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-over-modal" id="game-over-modal">
+            <div class="modal-content">
+                <h2>Game Over!</h2>
+                <p>All Pokemon have been eliminated!</p>
+                <div class="modal-buttons">
+                    <button class="modal-btn reset-btn" id="final-reset-btn">Start New Game</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="loading-overlay" id="loading-overlay">
+            <div class="loading-spinner"></div>
+            <p>Loading Pokemon...</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/pokemon_game.js') }}"></script>
+</body>
+</html> 
