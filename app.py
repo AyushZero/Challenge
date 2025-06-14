@@ -27,9 +27,11 @@ def save_game_state(game_state):
         json.dump(game_state, f, indent=2)
 
 def get_all_pokemon():
-    """Fetch all Pokemon from PokeAPI"""
+    """Fetch all Pokemon from PokeAPI with better error handling"""
     try:
-        response = requests.get('https://pokeapi.co/api/v2/pokemon?limit=151')
+        # Try to get Pokemon from API with timeout
+        response = requests.get('https://pokeapi.co/api/v2/pokemon?limit=151', timeout=10)
+        response.raise_for_status()
         data = response.json()
         pokemon_list = []
         
@@ -41,14 +43,52 @@ def get_all_pokemon():
                 'image_url': f'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{pokemon_id}.png'
             })
         
+        print(f"Successfully loaded {len(pokemon_list)} Pokemon from API")
         return pokemon_list
-    except:
-        # Fallback to a small list if API fails
+    except Exception as e:
+        print(f"API failed, using fallback Pokemon: {e}")
+        # Fallback to a comprehensive list if API fails
         return [
             {'id': 1, 'name': 'Bulbasaur', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png'},
+            {'id': 2, 'name': 'Ivysaur', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png'},
+            {'id': 3, 'name': 'Venusaur', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png'},
             {'id': 4, 'name': 'Charmander', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png'},
+            {'id': 5, 'name': 'Charmeleon', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png'},
+            {'id': 6, 'name': 'Charizard', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png'},
             {'id': 7, 'name': 'Squirtle', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png'},
+            {'id': 8, 'name': 'Wartortle', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/8.png'},
+            {'id': 9, 'name': 'Blastoise', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png'},
+            {'id': 10, 'name': 'Caterpie', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10.png'},
+            {'id': 11, 'name': 'Metapod', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/11.png'},
+            {'id': 12, 'name': 'Butterfree', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/12.png'},
+            {'id': 13, 'name': 'Weedle', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/13.png'},
+            {'id': 14, 'name': 'Kakuna', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/14.png'},
+            {'id': 15, 'name': 'Beedrill', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/15.png'},
+            {'id': 16, 'name': 'Pidgey', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/16.png'},
+            {'id': 17, 'name': 'Pidgeotto', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/17.png'},
+            {'id': 18, 'name': 'Pidgeot', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/18.png'},
+            {'id': 19, 'name': 'Rattata', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/19.png'},
+            {'id': 20, 'name': 'Raticate', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/20.png'},
+            {'id': 21, 'name': 'Spearow', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/21.png'},
+            {'id': 22, 'name': 'Fearow', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/22.png'},
+            {'id': 23, 'name': 'Ekans', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/23.png'},
+            {'id': 24, 'name': 'Arbok', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/24.png'},
             {'id': 25, 'name': 'Pikachu', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png'},
+            {'id': 26, 'name': 'Raichu', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png'},
+            {'id': 27, 'name': 'Sandshrew', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/27.png'},
+            {'id': 28, 'name': 'Sandslash', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/28.png'},
+            {'id': 29, 'name': 'Nidoran♀', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/29.png'},
+            {'id': 30, 'name': 'Nidorina', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/30.png'},
+            {'id': 31, 'name': 'Nidoqueen', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/31.png'},
+            {'id': 32, 'name': 'Nidoran♂', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/32.png'},
+            {'id': 33, 'name': 'Nidorino', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/33.png'},
+            {'id': 34, 'name': 'Nidoking', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/34.png'},
+            {'id': 35, 'name': 'Clefairy', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/35.png'},
+            {'id': 36, 'name': 'Clefable', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/36.png'},
+            {'id': 37, 'name': 'Vulpix', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/37.png'},
+            {'id': 38, 'name': 'Ninetales', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/38.png'},
+            {'id': 39, 'name': 'Jigglypuff', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/39.png'},
+            {'id': 40, 'name': 'Wigglytuff', 'image_url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/40.png'},
         ]
 
 def initialize_new_round():

@@ -58,38 +58,61 @@ class PokemonGame {
     async loadCurrentPokemon() {
         try {
             this.showLoading(true);
+            console.log('Loading current Pokemon...');
+            
             const response = await fetch('/api/current-pokemon');
+            console.log('API response status:', response.status);
             
             if (response.status === 404) {
+                console.log('No Pokemon left, showing round complete modal');
+                this.showLoading(false);
                 this.showRoundCompleteModal();
                 return;
             }
             
             const pokemon = await response.json();
-            this.displayPokemon(pokemon);
-            this.updateStats();
+            console.log('Loaded Pokemon:', pokemon);
+            
+            // Small delay to ensure smooth transition
+            setTimeout(() => {
+                this.displayPokemon(pokemon);
+                this.updateStats();
+                this.showLoading(false);
+            }, 100);
+            
         } catch (error) {
             console.error('Error loading Pokemon:', error);
-            this.showError('Failed to load Pokemon');
-        } finally {
+            this.showError('Failed to load Pokemon: ' + error.message);
             this.showLoading(false);
         }
     }
     
     displayPokemon(pokemon) {
+        console.log('Displaying Pokemon:', pokemon.name);
+        
+        // Reset card position and classes first
+        this.card.style.transform = '';
+        this.card.classList.remove('swiping-left', 'swiping-right', 'passed', 'smashed');
+        
+        // Set image with error handling
+        this.pokemonImage.onerror = () => {
+            console.log('Image failed to load, using fallback');
+            this.pokemonImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
+        };
+        
+        // Set Pokemon data
         this.pokemonImage.src = pokemon.image_url;
         this.pokemonName.textContent = pokemon.name;
         this.pokemonId.textContent = `#${pokemon.id.toString().padStart(3, '0')}`;
         
-        // Reset card position
-        this.card.style.transform = '';
-        this.card.classList.remove('swiping-left', 'swiping-right');
+        console.log('Pokemon displayed successfully:', pokemon.name);
     }
     
     async passPokemon() {
         if (this.isDragging) return;
         
         try {
+            console.log('Passing Pokemon...');
             const response = await fetch('/api/pass-pokemon', {
                 method: 'POST',
                 headers: {
@@ -98,10 +121,23 @@ class PokemonGame {
             });
             
             if (response.ok) {
+                const result = await response.json();
+                console.log('Passed Pokemon:', result);
+                
+                // Add animation class
                 this.card.classList.add('passed');
+                
+                // Wait for animation to complete, then reset and load next
                 setTimeout(() => {
+                    // Reset card position and classes
+                    this.card.style.transform = '';
+                    this.card.classList.remove('passed', 'swiping-left', 'swiping-right');
+                    
+                    // Load next Pokemon
                     this.loadCurrentPokemon();
                 }, 600);
+            } else {
+                console.error('Failed to pass Pokemon:', response.status);
             }
         } catch (error) {
             console.error('Error passing Pokemon:', error);
@@ -112,6 +148,7 @@ class PokemonGame {
         if (this.isDragging) return;
         
         try {
+            console.log('Smashing Pokemon...');
             const response = await fetch('/api/smash-pokemon', {
                 method: 'POST',
                 headers: {
@@ -120,10 +157,23 @@ class PokemonGame {
             });
             
             if (response.ok) {
+                const result = await response.json();
+                console.log('Smashed Pokemon:', result);
+                
+                // Add animation class
                 this.card.classList.add('smashed');
+                
+                // Wait for animation to complete, then reset and load next
                 setTimeout(() => {
+                    // Reset card position and classes
+                    this.card.style.transform = '';
+                    this.card.classList.remove('smashed', 'swiping-left', 'swiping-right');
+                    
+                    // Load next Pokemon
                     this.loadCurrentPokemon();
                 }, 600);
+            } else {
+                console.error('Failed to smash Pokemon:', response.status);
             }
         } catch (error) {
             console.error('Error smashing Pokemon:', error);
@@ -132,6 +182,7 @@ class PokemonGame {
     
     async nextRound() {
         try {
+            console.log('Starting next round...');
             const response = await fetch('/api/next-round', {
                 method: 'POST',
                 headers: {
@@ -140,8 +191,12 @@ class PokemonGame {
             });
             
             if (response.ok) {
+                const result = await response.json();
+                console.log('Next round started:', result);
                 this.hideModal(this.roundCompleteModal);
                 this.loadCurrentPokemon();
+            } else {
+                console.error('Failed to start next round:', response.status);
             }
         } catch (error) {
             console.error('Error starting next round:', error);
@@ -150,6 +205,7 @@ class PokemonGame {
     
     async resetGame() {
         try {
+            console.log('Resetting game...');
             const response = await fetch('/api/reset-game', {
                 method: 'POST',
                 headers: {
@@ -158,9 +214,13 @@ class PokemonGame {
             });
             
             if (response.ok) {
+                const result = await response.json();
+                console.log('Game reset:', result);
                 this.hideModal(this.roundCompleteModal);
                 this.hideModal(this.gameOverModal);
                 this.loadCurrentPokemon();
+            } else {
+                console.error('Failed to reset game:', response.status);
             }
         } catch (error) {
             console.error('Error resetting game:', error);
@@ -175,6 +235,8 @@ class PokemonGame {
             this.currentRound.textContent = gameState.current_round;
             this.remainingCount.textContent = gameState.remaining_pokemon.length;
             this.passedCount.textContent = gameState.passed_pokemon.length;
+            
+            console.log('Updated stats:', gameState);
         } catch (error) {
             console.error('Error updating stats:', error);
         }
@@ -338,11 +400,13 @@ class PokemonGame {
     }
     
     showError(message) {
+        console.error('Game Error:', message);
         alert(message);
     }
 }
 
 // Initialize the game when the page loads
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Pokemon Game initializing...');
     new PokemonGame();
 }); 
