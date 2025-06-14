@@ -60,17 +60,18 @@ class PokemonGame {
         }
         
         this.isPreloading = true;
-        console.log('Preloading next Pokemon...');
+        const nextIndex = this.preloadedPokemon.length + 1; // +1 because we want the next Pokemon after current
+        console.log(`Preloading Pokemon at index ${nextIndex}...`);
         
         try {
-            const response = await fetch('/api/current-pokemon');
+            const response = await fetch(`/api/next-pokemon/${nextIndex}`);
             if (response.ok) {
                 const pokemon = await response.json();
                 
                 // Preload the image
                 const img = new Image();
                 img.onload = () => {
-                    console.log(`Preloaded: ${pokemon.name}`);
+                    console.log(`Preloaded: ${pokemon.name} (index ${nextIndex})`);
                     this.preloadedPokemon.push(pokemon);
                     this.isPreloading = false;
                     
@@ -85,6 +86,7 @@ class PokemonGame {
                 };
                 img.src = pokemon.image_url;
             } else {
+                console.log(`No more Pokemon to preload at index ${nextIndex}`);
                 this.isPreloading = false;
             }
         } catch (error) {

@@ -130,6 +130,16 @@ def get_current_pokemon():
     
     return jsonify(game_state['remaining_pokemon'][0])
 
+@app.route('/api/next-pokemon/<int:index>')
+def get_next_pokemon(index):
+    """Get Pokemon at specific index for preloading"""
+    game_state = load_game_state()
+    
+    if not game_state['remaining_pokemon'] or index >= len(game_state['remaining_pokemon']):
+        return jsonify({'error': 'No Pokemon at that index'}), 404
+    
+    return jsonify(game_state['remaining_pokemon'][index])
+
 @app.route('/api/pass-pokemon', methods=['POST'])
 def pass_pokemon():
     game_state = load_game_state()
