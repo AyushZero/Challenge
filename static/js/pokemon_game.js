@@ -29,6 +29,11 @@ class PokemonGame {
         this.threshold = 100;
         this.currentCard = null;
         
+        // Preloading system
+        this.preloadedPokemon = [];
+        this.isPreloading = false;
+        this.preloadCount = 5;
+        
         this.initializeEventListeners();
         this.loadCurrentPokemon();
     }
@@ -47,6 +52,58 @@ class PokemonGame {
         
         // Keyboard events
         document.addEventListener('keydown', (e) => this.handleKeyPress(e));
+    }
+    
+    async preloadNextPokemon() {
+        if (this.isPreloading || this.preloadedPokemon.length >= this.preloadCount) {
+            return;
+        }
+        
+        this.isPreloading = true;
+        console.log('Preloading next Pokemon...');
+        
+        try {
+            const response = await fetch('/api/current-pokemon');
+            if (response.ok) {
+                const pokemon = await response.json();
+                
+                // Preload the image
+                const img = new Image();
+                img.onload = () => {
+                    console.log(`Preloaded: ${pokemon.name}`);
+                    this.preloadedPokemon.push(pokemon);
+                    this.isPreloading = false;
+                    
+                    // Continue preloading if we need more
+                    if (this.preloadedPokemon.length < this.preloadCount) {
+                        this.preloadNextPokemon();
+                    }
+                };
+                img.onerror = () => {
+                    console.log(`Failed to preload image for: ${pokemon.name}`);
+                    this.isPreloading = false;
+                };
+                img.src = pokemon.image_url;
+            } else {
+                this.isPreloading = false;
+            }
+        } catch (error) {
+            console.error('Error preloading Pokemon:', error);
+            this.isPreloading = false;
+        }
+    }
+    
+    getPreloadedPokemon() {
+        if (this.preloadedPokemon.length > 0) {
+            const pokemon = this.preloadedPokemon.shift();
+            console.log(`Using preloaded Pokemon: ${pokemon.name}`);
+            
+            // Start preloading the next one
+            this.preloadNextPokemon();
+            
+            return pokemon;
+        }
+        return null;
     }
     
     createNewCard() {
@@ -96,8 +153,23 @@ class PokemonGame {
     
     async loadCurrentPokemon() {
         try {
+            // Check if we have a preloaded Pokemon
+            const preloadedPokemon = this.getPreloadedPokemon();
+            
+            if (preloadedPokemon) {
+                // Use preloaded Pokemon (instant display)
+                this.createNewCard();
+                this.displayPokemon(preloadedPokemon);
+                this.updateStats();
+                
+                // Start preloading for the next batch
+                this.preloadNextPokemon();
+                return;
+            }
+            
+            // Fallback to loading from API
             this.showLoading(true);
-            console.log('Loading current Pokemon...');
+            console.log('Loading current Pokemon from API...');
             
             const response = await fetch('/api/current-pokemon');
             console.log('API response status:', response.status);
@@ -110,13 +182,16 @@ class PokemonGame {
             }
             
             const pokemon = await response.json();
-            console.log('Loaded Pokemon:', pokemon);
+            console.log('Loaded Pokemon from API:', pokemon);
             
             // Create new card and display Pokemon
             this.createNewCard();
             this.displayPokemon(pokemon);
             this.updateStats();
             this.showLoading(false);
+            
+            // Start preloading for next batch
+            this.preloadNextPokemon();
             
         } catch (error) {
             console.error('Error loading Pokemon:', error);
@@ -217,6 +292,11 @@ class PokemonGame {
             if (response.ok) {
                 const result = await response.json();
                 console.log('Next round started:', result);
+                
+                // Clear preloaded Pokemon for new round
+                this.preloadedPokemon = [];
+                this.isPreloading = false;
+                
                 this.hideModal(this.roundCompleteModal);
                 this.loadCurrentPokemon();
             } else {
@@ -240,6 +320,11 @@ class PokemonGame {
             if (response.ok) {
                 const result = await response.json();
                 console.log('Game reset:', result);
+                
+                // Clear preloaded Pokemon for new game
+                this.preloadedPokemon = [];
+                this.isPreloading = false;
+                
                 this.hideModal(this.roundCompleteModal);
                 this.hideModal(this.gameOverModal);
                 this.loadCurrentPokemon();
@@ -261,6 +346,7 @@ class PokemonGame {
             this.passedCount.textContent = gameState.passed_pokemon.length;
             
             console.log('Updated stats:', gameState);
+            console.log(`Preloaded Pokemon: ${this.preloadedPokemon.length}/${this.preloadCount}`);
         } catch (error) {
             console.error('Error updating stats:', error);
         }
