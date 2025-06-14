@@ -1,6 +1,5 @@
 class PokemonGame {
     constructor() {
-        this.card = document.getElementById('pokemon-card');
         this.cardContainer = document.getElementById('card-container');
         this.pokemonImage = document.getElementById('pokemon-image');
         this.pokemonName = document.getElementById('pokemon-name');
@@ -28,6 +27,7 @@ class PokemonGame {
         this.currentY = 0;
         this.isDragging = false;
         this.threshold = 100;
+        this.currentCard = null;
         
         this.initializeEventListeners();
         this.loadCurrentPokemon();
@@ -41,18 +41,57 @@ class PokemonGame {
         this.resetBtn.addEventListener('click', () => this.resetGame());
         this.finalResetBtn.addEventListener('click', () => this.resetGame());
         
-        // Touch events for mobile
-        this.card.addEventListener('touchstart', (e) => this.handleTouchStart(e));
-        this.card.addEventListener('touchmove', (e) => this.handleTouchMove(e));
-        this.card.addEventListener('touchend', (e) => this.handleTouchEnd(e));
-        
-        // Mouse events for desktop
-        this.card.addEventListener('mousedown', (e) => this.handleMouseDown(e));
+        // Global mouse events for desktop
         document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
         document.addEventListener('mouseup', (e) => this.handleMouseUp(e));
         
         // Keyboard events
         document.addEventListener('keydown', (e) => this.handleKeyPress(e));
+    }
+    
+    createNewCard() {
+        // Clear the entire container first
+        this.cardContainer.innerHTML = '';
+        
+        // Create new card
+        const card = document.createElement('div');
+        card.className = 'pokemon-card';
+        card.id = 'pokemon-card';
+        
+        card.innerHTML = `
+            <div class="card-content">
+                <div class="pokemon-image-container">
+                    <img id="pokemon-image" src="" alt="Pokemon" class="pokemon-image">
+                </div>
+                <div class="pokemon-info">
+                    <h2 id="pokemon-name" class="pokemon-name">Loading...</h2>
+                    <p id="pokemon-id" class="pokemon-id">#000</p>
+                </div>
+            </div>
+            <div class="card-overlay pass-overlay">
+                <span>PASS</span>
+            </div>
+            <div class="card-overlay smash-overlay">
+                <span>SMASH</span>
+            </div>
+        `;
+        
+        // Add event listeners to the new card
+        card.addEventListener('touchstart', (e) => this.handleTouchStart(e));
+        card.addEventListener('touchmove', (e) => this.handleTouchMove(e));
+        card.addEventListener('touchend', (e) => this.handleTouchEnd(e));
+        card.addEventListener('mousedown', (e) => this.handleMouseDown(e));
+        
+        // Add card to container
+        this.cardContainer.appendChild(card);
+        this.currentCard = card;
+        
+        // Update references to the new elements
+        this.pokemonImage = card.querySelector('#pokemon-image');
+        this.pokemonName = card.querySelector('#pokemon-name');
+        this.pokemonId = card.querySelector('#pokemon-id');
+        
+        return card;
     }
     
     async loadCurrentPokemon() {
@@ -73,12 +112,11 @@ class PokemonGame {
             const pokemon = await response.json();
             console.log('Loaded Pokemon:', pokemon);
             
-            // Small delay to ensure smooth transition
-            setTimeout(() => {
-                this.displayPokemon(pokemon);
-                this.updateStats();
-                this.showLoading(false);
-            }, 100);
+            // Create new card and display Pokemon
+            this.createNewCard();
+            this.displayPokemon(pokemon);
+            this.updateStats();
+            this.showLoading(false);
             
         } catch (error) {
             console.error('Error loading Pokemon:', error);
@@ -89,10 +127,6 @@ class PokemonGame {
     
     displayPokemon(pokemon) {
         console.log('Displaying Pokemon:', pokemon.name);
-        
-        // Reset card position and classes first
-        this.card.style.transform = '';
-        this.card.classList.remove('swiping-left', 'swiping-right', 'passed', 'smashed');
         
         // Set image with error handling
         this.pokemonImage.onerror = () => {
@@ -124,16 +158,11 @@ class PokemonGame {
                 const result = await response.json();
                 console.log('Passed Pokemon:', result);
                 
-                // Add animation class
-                this.card.classList.add('passed');
+                // Animate current card out
+                this.currentCard.classList.add('passed');
                 
-                // Wait for animation to complete, then reset and load next
+                // Wait for animation to complete, then load next
                 setTimeout(() => {
-                    // Reset card position and classes
-                    this.card.style.transform = '';
-                    this.card.classList.remove('passed', 'swiping-left', 'swiping-right');
-                    
-                    // Load next Pokemon
                     this.loadCurrentPokemon();
                 }, 600);
             } else {
@@ -160,16 +189,11 @@ class PokemonGame {
                 const result = await response.json();
                 console.log('Smashed Pokemon:', result);
                 
-                // Add animation class
-                this.card.classList.add('smashed');
+                // Animate current card out
+                this.currentCard.classList.add('smashed');
                 
-                // Wait for animation to complete, then reset and load next
+                // Wait for animation to complete, then load next
                 setTimeout(() => {
-                    // Reset card position and classes
-                    this.card.style.transform = '';
-                    this.card.classList.remove('smashed', 'swiping-left', 'swiping-right');
-                    
-                    // Load next Pokemon
                     this.loadCurrentPokemon();
                 }, 600);
             } else {
@@ -301,8 +325,8 @@ class PokemonGame {
             }
         } else {
             // Reset card position
-            this.card.style.transform = '';
-            this.card.classList.remove('swiping-left', 'swiping-right');
+            this.currentCard.style.transform = '';
+            this.currentCard.classList.remove('swiping-left', 'swiping-right');
         }
         
         this.isDragging = false;
@@ -339,8 +363,8 @@ class PokemonGame {
             }
         } else {
             // Reset card position
-            this.card.style.transform = '';
-            this.card.classList.remove('swiping-left', 'swiping-right');
+            this.currentCard.style.transform = '';
+            this.currentCard.classList.remove('swiping-left', 'swiping-right');
         }
         
         this.isDragging = false;
@@ -376,14 +400,14 @@ class PokemonGame {
         // Calculate rotation based on horizontal movement
         const rotation = (deltaX / this.threshold) * 15;
         
-        this.card.style.transform = `translate(${deltaX}px, ${limitedDeltaY}px) rotate(${rotation}deg)`;
+        this.currentCard.style.transform = `translate(${deltaX}px, ${limitedDeltaY}px) rotate(${rotation}deg)`;
         
         // Update overlay visibility
-        this.card.classList.remove('swiping-left', 'swiping-right');
+        this.currentCard.classList.remove('swiping-left', 'swiping-right');
         if (deltaX > 50) {
-            this.card.classList.add('swiping-right');
+            this.currentCard.classList.add('swiping-right');
         } else if (deltaX < -50) {
-            this.card.classList.add('swiping-left');
+            this.currentCard.classList.add('swiping-left');
         }
     }
     

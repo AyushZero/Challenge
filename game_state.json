@@ -2,351 +2,6 @@
   "current_round": 1,
   "remaining_pokemon": [
     {
-      "id": 27,
-      "name": "Sandshrew",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/27.png"
-    },
-    {
-      "id": 28,
-      "name": "Sandslash",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/28.png"
-    },
-    {
-      "id": 29,
-      "name": "Nidoran-F",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/29.png"
-    },
-    {
-      "id": 30,
-      "name": "Nidorina",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/30.png"
-    },
-    {
-      "id": 31,
-      "name": "Nidoqueen",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/31.png"
-    },
-    {
-      "id": 32,
-      "name": "Nidoran-M",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/32.png"
-    },
-    {
-      "id": 33,
-      "name": "Nidorino",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/33.png"
-    },
-    {
-      "id": 34,
-      "name": "Nidoking",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/34.png"
-    },
-    {
-      "id": 35,
-      "name": "Clefairy",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/35.png"
-    },
-    {
-      "id": 36,
-      "name": "Clefable",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/36.png"
-    },
-    {
-      "id": 37,
-      "name": "Vulpix",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/37.png"
-    },
-    {
-      "id": 38,
-      "name": "Ninetales",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/38.png"
-    },
-    {
-      "id": 39,
-      "name": "Jigglypuff",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/39.png"
-    },
-    {
-      "id": 40,
-      "name": "Wigglytuff",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/40.png"
-    },
-    {
-      "id": 41,
-      "name": "Zubat",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/41.png"
-    },
-    {
-      "id": 42,
-      "name": "Golbat",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/42.png"
-    },
-    {
-      "id": 43,
-      "name": "Oddish",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/43.png"
-    },
-    {
-      "id": 44,
-      "name": "Gloom",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/44.png"
-    },
-    {
-      "id": 45,
-      "name": "Vileplume",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/45.png"
-    },
-    {
-      "id": 46,
-      "name": "Paras",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/46.png"
-    },
-    {
-      "id": 47,
-      "name": "Parasect",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/47.png"
-    },
-    {
-      "id": 48,
-      "name": "Venonat",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/48.png"
-    },
-    {
-      "id": 49,
-      "name": "Venomoth",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/49.png"
-    },
-    {
-      "id": 50,
-      "name": "Diglett",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/50.png"
-    },
-    {
-      "id": 51,
-      "name": "Dugtrio",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/51.png"
-    },
-    {
-      "id": 52,
-      "name": "Meowth",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/52.png"
-    },
-    {
-      "id": 53,
-      "name": "Persian",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/53.png"
-    },
-    {
-      "id": 54,
-      "name": "Psyduck",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/54.png"
-    },
-    {
-      "id": 55,
-      "name": "Golduck",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/55.png"
-    },
-    {
-      "id": 56,
-      "name": "Mankey",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/56.png"
-    },
-    {
-      "id": 57,
-      "name": "Primeape",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/57.png"
-    },
-    {
-      "id": 58,
-      "name": "Growlithe",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/58.png"
-    },
-    {
-      "id": 59,
-      "name": "Arcanine",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/59.png"
-    },
-    {
-      "id": 60,
-      "name": "Poliwag",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/60.png"
-    },
-    {
-      "id": 61,
-      "name": "Poliwhirl",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/61.png"
-    },
-    {
-      "id": 62,
-      "name": "Poliwrath",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/62.png"
-    },
-    {
-      "id": 63,
-      "name": "Abra",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/63.png"
-    },
-    {
-      "id": 64,
-      "name": "Kadabra",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/64.png"
-    },
-    {
-      "id": 65,
-      "name": "Alakazam",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/65.png"
-    },
-    {
-      "id": 66,
-      "name": "Machop",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/66.png"
-    },
-    {
-      "id": 67,
-      "name": "Machoke",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/67.png"
-    },
-    {
-      "id": 68,
-      "name": "Machamp",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/68.png"
-    },
-    {
-      "id": 69,
-      "name": "Bellsprout",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/69.png"
-    },
-    {
-      "id": 70,
-      "name": "Weepinbell",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/70.png"
-    },
-    {
-      "id": 71,
-      "name": "Victreebel",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/71.png"
-    },
-    {
-      "id": 72,
-      "name": "Tentacool",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/72.png"
-    },
-    {
-      "id": 73,
-      "name": "Tentacruel",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/73.png"
-    },
-    {
-      "id": 74,
-      "name": "Geodude",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/74.png"
-    },
-    {
-      "id": 75,
-      "name": "Graveler",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/75.png"
-    },
-    {
-      "id": 76,
-      "name": "Golem",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/76.png"
-    },
-    {
-      "id": 77,
-      "name": "Ponyta",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/77.png"
-    },
-    {
-      "id": 78,
-      "name": "Rapidash",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/78.png"
-    },
-    {
-      "id": 79,
-      "name": "Slowpoke",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/79.png"
-    },
-    {
-      "id": 80,
-      "name": "Slowbro",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/80.png"
-    },
-    {
-      "id": 81,
-      "name": "Magnemite",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/81.png"
-    },
-    {
-      "id": 82,
-      "name": "Magneton",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/82.png"
-    },
-    {
-      "id": 83,
-      "name": "Farfetchd",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/83.png"
-    },
-    {
-      "id": 84,
-      "name": "Doduo",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/84.png"
-    },
-    {
-      "id": 85,
-      "name": "Dodrio",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/85.png"
-    },
-    {
-      "id": 86,
-      "name": "Seel",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/86.png"
-    },
-    {
-      "id": 87,
-      "name": "Dewgong",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/87.png"
-    },
-    {
-      "id": 88,
-      "name": "Grimer",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/88.png"
-    },
-    {
-      "id": 89,
-      "name": "Muk",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/89.png"
-    },
-    {
-      "id": 90,
-      "name": "Shellder",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/90.png"
-    },
-    {
-      "id": 91,
-      "name": "Cloyster",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/91.png"
-    },
-    {
-      "id": 92,
-      "name": "Gastly",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/92.png"
-    },
-    {
-      "id": 93,
-      "name": "Haunter",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/93.png"
-    },
-    {
-      "id": 94,
-      "name": "Gengar",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png"
-    },
-    {
-      "id": 95,
-      "name": "Onix",
-      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/95.png"
-    },
-    {
       "id": 96,
       "name": "Drowzee",
       "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/96.png"
@@ -687,6 +342,76 @@
       "id": 26,
       "name": "Raichu",
       "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png"
+    },
+    {
+      "id": 27,
+      "name": "Sandshrew",
+      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/27.png"
+    },
+    {
+      "id": 28,
+      "name": "Sandslash",
+      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/28.png"
+    },
+    {
+      "id": 30,
+      "name": "Nidorina",
+      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/30.png"
+    },
+    {
+      "id": 67,
+      "name": "Machoke",
+      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/67.png"
+    },
+    {
+      "id": 68,
+      "name": "Machamp",
+      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/68.png"
+    },
+    {
+      "id": 69,
+      "name": "Bellsprout",
+      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/69.png"
+    },
+    {
+      "id": 70,
+      "name": "Weepinbell",
+      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/70.png"
+    },
+    {
+      "id": 71,
+      "name": "Victreebel",
+      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/71.png"
+    },
+    {
+      "id": 72,
+      "name": "Tentacool",
+      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/72.png"
+    },
+    {
+      "id": 73,
+      "name": "Tentacruel",
+      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/73.png"
+    },
+    {
+      "id": 74,
+      "name": "Geodude",
+      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/74.png"
+    },
+    {
+      "id": 75,
+      "name": "Graveler",
+      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/75.png"
+    },
+    {
+      "id": 76,
+      "name": "Golem",
+      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/76.png"
+    },
+    {
+      "id": 77,
+      "name": "Ponyta",
+      "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/77.png"
     }
   ],
   "game_history": [
