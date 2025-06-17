@@ -3,76 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shiny Pokemon Tournament</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/pokemon_tournament.css') }}">
+    <title>Shiny Pokémon Tournament</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pokemon_minimal.css') }}">
 </head>
 <body>
-    <div class="container">
-        <div class="game-header">
-            <h1>🌟 Shiny Pokemon Tournament 🌟</h1>
-            <div class="game-stats">
-                <div class="stat">
-                    <span class="stat-label">Round</span>
-                    <span class="stat-value" id="current-round">{{ game_state.current_round }}</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-label">Remaining Matches</span>
-                    <span class="stat-value" id="remaining-matches">0</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-label">Winners</span>
-                    <span class="stat-value" id="winners-count">0</span>
-                </div>
-            </div>
+    <div class="split-container">
+        <div class="split half left" id="left-half">
+            <img id="left-pokemon" class="pokemon-img grayscale" src="" alt="Left Pokémon">
         </div>
-
-        <div class="game-area">
-            <div class="match-container" id="match-container">
-                <!-- Pokemon cards will be inserted here -->
-            </div>
-
-            <div class="action-buttons">
-                <button class="action-btn choose-btn" id="choose-pokemon1-btn">
-                    <span class="btn-icon">👑</span>
-                    <span class="btn-text">Choose Left</span>
-                </button>
-                <button class="action-btn choose-btn" id="choose-pokemon2-btn">
-                    <span class="btn-icon">👑</span>
-                    <span class="btn-text">Choose Right</span>
-                </button>
-            </div>
+        <div class="split-divider"></div>
+        <div class="split half right" id="right-half">
+            <img id="right-pokemon" class="pokemon-img grayscale" src="" alt="Right Pokémon">
         </div>
     </div>
-
-    <!-- Modals -->
-    <div class="round-complete-modal" id="round-complete-modal">
-        <div class="modal-content">
-            <h2>Round Complete!</h2>
-            <p id="round-summary">All matches in this round have been completed.</p>
-            <div class="modal-buttons">
-                <button class="modal-btn next-round-btn" id="next-round-btn">Next Round</button>
-                <button class="modal-btn reset-btn" id="reset-btn">New Tournament</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="game-over-modal" id="game-over-modal">
-        <div class="modal-content">
-            <h2>Tournament Complete!</h2>
-            <p id="final-winner">We have a champion!</p>
-            <div class="modal-buttons">
-                <button class="modal-btn reset-btn" id="final-reset-btn">New Tournament</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Loading overlay -->
-    <div class="loading-overlay" id="loading-overlay">
-        <div class="loading-spinner"></div>
-        <p>Loading Pokemon...</p>
-    </div>
-
-    <script src="{{ url_for('static', filename='js/pokemon_tournament.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pokemon_minimal.js') }}"></script>
 </body>
 </html> 

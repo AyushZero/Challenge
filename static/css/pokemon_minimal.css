@@ -1,0 +1,54 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #181a1b;
+}
+
+.split-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.split {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.split.left:hover, .split.right:hover {
+    background: #23272b;
+}
+
+.split-divider {
+    width: 2px;
+    background: #444;
+    height: 100vh;
+}
+
+.pokemon-img {
+    max-width: 60vw;
+    max-height: 80vh;
+    filter: grayscale(1);
+    transition: filter 0.2s;
+    user-select: none;
+    pointer-events: none;
+}
+
+.split.left:hover #left-pokemon,
+.split.right:hover #right-pokemon {
+    filter: grayscale(0);
+}
+
+@media (max-width: 900px) {
+    .pokemon-img {
+        max-width: 90vw;
+        max-height: 40vh;
+    }
+} 

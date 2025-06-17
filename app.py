@@ -181,23 +181,19 @@ def choose_pokemon():
 @app.route('/api/next-round', methods=['POST'])
 def next_round():
     game_state = load_game_state()
-    
     # If one unpaired Pokemon remains, auto-advance it
     if len(game_state['current_pokemon']) == 1:
         game_state['winners'].append(game_state['current_pokemon'][0])
         game_state['current_pokemon'] = []
         save_game_state(game_state)
-    
     if game_state['current_pokemon']:
         return jsonify({'error': 'Current round not finished'}), 400
-    
     if len(game_state['winners']) < 2:
         return jsonify({'error': 'Not enough winners to continue'}), 400
-    
     # Start new round
     game_state['current_round'] += 1
+    save_game_state(game_state)  # Save incremented round
     game_state = initialize_new_round()
-    
     return jsonify({
         'message': f'Round {game_state["current_round"]} started!',
         'pokemon_count': len(game_state['current_pokemon']),
