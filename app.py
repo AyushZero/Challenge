@@ -6,7 +6,7 @@ import requests
 import random
 
 app = Flask(__name__)
-app.secret_key = 'pokemon_swipe_game_secret_key'
+app.secret_key = 'pokemon_tournament_game_secret_key'
 
 # Game state file
 GAME_STATE_FILE = 'game_state.json'
@@ -17,8 +17,8 @@ def load_game_state():
             return json.load(f)
     return {
         'current_round': 1,
-        'remaining_pokemon': [],
-        'passed_pokemon': [],
+        'current_pokemon': [],
+        'winners': [],
         'game_history': []
     }
 
@@ -92,19 +92,23 @@ def get_all_pokemon():
         ]
 
 def initialize_new_round():
-    """Initialize a new round with all Pokemon"""
+    """Initialize a new round with Pokemon"""
     game_state = load_game_state()
-    if game_state['current_round'] == 1:
-        # First round: get all Pokemon
-        game_state['remaining_pokemon'] = get_all_pokemon()
-    else:
-        # Subsequent rounds: use passed Pokemon from previous round
-        game_state['remaining_pokemon'] = game_state['passed_pokemon'].copy()
     
-    game_state['passed_pokemon'] = []
+    if game_state['current_round'] == 1:
+        # First round: get all Pokemon and shuffle them
+        all_pokemon = get_all_pokemon()
+        random.shuffle(all_pokemon)
+        game_state['current_pokemon'] = all_pokemon
+    else:
+        # Subsequent rounds: use winners from previous round
+        game_state['current_pokemon'] = game_state['winners'].copy()
+        random.shuffle(game_state['current_pokemon'])
+    
+    game_state['winners'] = []
     game_state['game_history'].append({
         'round': game_state['current_round'],
-        'total_pokemon': len(game_state['remaining_pokemon']),
+        'total_pokemon': len(game_state['current_pokemon']),
         'started_at': datetime.now().isoformat()
     })
     
@@ -116,76 +120,73 @@ def index():
     game_state = load_game_state()
     
     # Initialize first round if needed
-    if not game_state['remaining_pokemon']:
+    if not game_state['current_pokemon'] and not game_state['winners']:
         game_state = initialize_new_round()
     
-    return render_template('pokemon_game.html', game_state=game_state)
+    return render_template('pokemon_tournament.html', game_state=game_state)
 
-@app.route('/api/current-pokemon')
-def get_current_pokemon():
+@app.route('/api/current-match')
+def get_current_match():
     game_state = load_game_state()
     
-    if not game_state['remaining_pokemon']:
-        return jsonify({'error': 'No Pokemon left in this round'}), 404
+    if len(game_state['current_pokemon']) < 2:
+        return jsonify({'error': 'Not enough Pokemon for a match'}), 404
     
-    return jsonify(game_state['remaining_pokemon'][0])
-
-@app.route('/api/next-pokemon/<int:index>')
-def get_next_pokemon(index):
-    """Get Pokemon at specific index for preloading"""
-    game_state = load_game_state()
-    
-    if not game_state['remaining_pokemon'] or index >= len(game_state['remaining_pokemon']):
-        return jsonify({'error': 'No Pokemon at that index'}), 404
-    
-    return jsonify(game_state['remaining_pokemon'][index])
-
-@app.route('/api/pass-pokemon', methods=['POST'])
-def pass_pokemon():
-    game_state = load_game_state()
-    
-    if not game_state['remaining_pokemon']:
-        return jsonify({'error': 'No Pokemon left'}), 404
-    
-    # Move current Pokemon to passed list
-    passed_pokemon = game_state['remaining_pokemon'].pop(0)
-    game_state['passed_pokemon'].append(passed_pokemon)
-    
-    save_game_state(game_state)
-    
+    # Return the first two Pokemon for the current match
     return jsonify({
-        'message': f'Passed {passed_pokemon["name"]}',
-        'remaining_count': len(game_state['remaining_pokemon']),
-        'passed_count': len(game_state['passed_pokemon'])
+        'pokemon1': game_state['current_pokemon'][0],
+        'pokemon2': game_state['current_pokemon'][1],
+        'remaining_matches': len(game_state['current_pokemon']) // 2,
+        'current_round': game_state['current_round']
     })
 
-@app.route('/api/smash-pokemon', methods=['POST'])
-def smash_pokemon():
+@app.route('/api/choose-pokemon', methods=['POST'])
+def choose_pokemon():
     game_state = load_game_state()
     
-    if not game_state['remaining_pokemon']:
-        return jsonify({'error': 'No Pokemon left'}), 404
+    if len(game_state['current_pokemon']) < 2:
+        return jsonify({'error': 'Not enough Pokemon for a match'}), 404
     
-    # Remove current Pokemon (smash it)
-    smashed_pokemon = game_state['remaining_pokemon'].pop(0)
+    data = request.get_json()
+    choice = data.get('choice')  # 'pokemon1' or 'pokemon2'
+    
+    if choice not in ['pokemon1', 'pokemon2']:
+        return jsonify({'error': 'Invalid choice'}), 400
+    
+    # Get the chosen Pokemon and remove both from current list
+    if choice == 'pokemon1':
+        winner = game_state['current_pokemon'][0]
+        loser = game_state['current_pokemon'][1]
+    else:
+        winner = game_state['current_pokemon'][1]
+        loser = game_state['current_pokemon'][0]
+    
+    # Remove both Pokemon from current list
+    game_state['current_pokemon'] = game_state['current_pokemon'][2:]
+    
+    # Add winner to winners list
+    game_state['winners'].append(winner)
     
     save_game_state(game_state)
     
     return jsonify({
-        'message': f'Smashed {smashed_pokemon["name"]}',
-        'remaining_count': len(game_state['remaining_pokemon']),
-        'passed_count': len(game_state['passed_pokemon'])
+        'message': f'{winner["name"]} wins! {loser["name"]} is eliminated.',
+        'winner': winner,
+        'loser': loser,
+        'remaining_matches': len(game_state['current_pokemon']) // 2,
+        'winners_count': len(game_state['winners']),
+        'current_round': game_state['current_round']
     })
 
 @app.route('/api/next-round', methods=['POST'])
 def next_round():
     game_state = load_game_state()
     
-    if game_state['remaining_pokemon']:
+    if game_state['current_pokemon']:
         return jsonify({'error': 'Current round not finished'}), 400
     
-    if not game_state['passed_pokemon']:
-        return jsonify({'error': 'No Pokemon passed to continue'}), 400
+    if len(game_state['winners']) < 2:
+        return jsonify({'error': 'Not enough winners to continue'}), 400
     
     # Start new round
     game_state['current_round'] += 1
@@ -193,7 +194,7 @@ def next_round():
     
     return jsonify({
         'message': f'Round {game_state["current_round"]} started!',
-        'pokemon_count': len(game_state['remaining_pokemon']),
+        'pokemon_count': len(game_state['current_pokemon']),
         'current_round': game_state['current_round']
     })
 
@@ -202,18 +203,18 @@ def reset_game():
     # Reset game state
     game_state = {
         'current_round': 1,
-        'remaining_pokemon': [],
-        'passed_pokemon': [],
+        'current_pokemon': [],
+        'winners': [],
         'game_history': []
     }
     save_game_state(game_state)
     
-    # Initialize first round
+    # Initialize new game
     game_state = initialize_new_round()
     
     return jsonify({
-        'message': 'Game reset!',
-        'pokemon_count': len(game_state['remaining_pokemon']),
+        'message': 'Game reset! New tournament started.',
+        'pokemon_count': len(game_state['current_pokemon']),
         'current_round': game_state['current_round']
     })
 
@@ -223,4 +224,4 @@ def get_game_state():
     return jsonify(game_state)
 
 if __name__ == '__main__':
-    app.run(debug=True) 
+    app.run(debug=True, host='0.0.0.0', port=5000) 
