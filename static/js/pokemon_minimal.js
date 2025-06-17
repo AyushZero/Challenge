@@ -2,12 +2,27 @@ async function loadMatch() {
     const res = await fetch('/api/current-match');
     if (!res.ok) {
         // Tournament over or round complete
-        document.body.innerHTML = '<div style="color:white;text-align:center;font-size:2em;display:flex;align-items:center;justify-content:center;height:100vh;">Tournament Complete!</div>';
+        document.body.innerHTML = `
+            <div style="color:white;text-align:center;font-size:2em;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;">
+                <div>Tournament Complete!</div>
+                <button id="restart-btn" style="margin-top:20px;padding:10px 20px;font-size:1em;background:#444;color:white;border:none;border-radius:5px;cursor:pointer;">Restart Tournament</button>
+                <div style="margin-top:10px;font-size:0.5em;">Press 'R' to restart</div>
+            </div>
+        `;
+        document.getElementById('restart-btn').addEventListener('click', restartTournament);
+        document.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 'r') restartTournament();
+        });
         return;
     }
     const data = await res.json();
     document.getElementById('left-pokemon').src = data.pokemon1.image_url;
     document.getElementById('right-pokemon').src = data.pokemon2.image_url;
+}
+
+async function restartTournament() {
+    await fetch('/api/reset-game', { method: 'POST' });
+    loadMatch();
 }
 
 async function choose(side) {
