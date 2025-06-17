@@ -182,6 +182,12 @@ def choose_pokemon():
 def next_round():
     game_state = load_game_state()
     
+    # If one unpaired Pokemon remains, auto-advance it
+    if len(game_state['current_pokemon']) == 1:
+        game_state['winners'].append(game_state['current_pokemon'][0])
+        game_state['current_pokemon'] = []
+        save_game_state(game_state)
+    
     if game_state['current_pokemon']:
         return jsonify({'error': 'Current round not finished'}), 400
     

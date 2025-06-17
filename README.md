@@ -1,68 +1,53 @@
-# Pokemon Swipe Game
+# Shiny Pokémon Tournament
 
-A fun card-swiping game featuring Pokemon! Swipe right to pass Pokemon to the next round, or swipe left to smash them and eliminate them from the game.
-
-## How to Play
-
-1. **First Round**: All Pokemon (151 total) are available
-2. **Swipe Right (Pass)**: Pokemon survives and moves to the next round
-3. **Swipe Left (Smash)**: Pokemon is eliminated from the game
-4. **Next Rounds**: Only Pokemon that were passed in the previous round continue
-5. **Game Over**: When no Pokemon are left to pass, the game ends
-
-## Controls
-
-- **Mouse/Touch**: Click and drag the card left or right
-- **Keyboard**: 
-  - `A` or `←` to smash (left)
-  - `D` or `→` to pass (right)
-- **Buttons**: Click the Pass (👎) or Smash (💥) buttons
+A Flask web app for running a tournament-style bracket with shiny Pokémon! Each round, you choose between two shiny Pokémon. The winner advances, and the process repeats until a single champion remains.
 
 ## Features
+- All Pokémon are shiny (special color variants)
+- Tournament bracket: choose between two Pokémon at a time
+- Winners advance to the next round
+- Responsive, modern UI
+- Keyboard shortcuts for fast play
 
-- Beautiful card animations with smooth transitions
-- Responsive design for mobile and desktop
-- Real Pokemon data from PokeAPI
-- Game state persistence
-- Round progression system
-- Statistics tracking
+## Setup
 
-## Installation
+1. **Clone the repository:**
+   ```sh
+   git clone <repo-url>
+   cd ChallengeZero
+   ```
 
-1. Install Python dependencies:
-```bash
-pip install -r requirements.txt
-```
+2. **Create a virtual environment:**
+   ```sh
+   python -m venv venv
+   # On Windows PowerShell:
+   .\venv\Scripts\Activate.ps1
+   # On Windows CMD:
+   venv\Scripts\activate.bat
+   # On Mac/Linux:
+   source venv/bin/activate
+   ```
 
-2. Run the Flask application:
-```bash
-python app.py
-```
+3. **Install dependencies:**
+   ```sh
+   pip install -r requirements.txt
+   ```
 
-3. Open your browser and go to `http://localhost:5000`
+4. **Run the app:**
+   ```sh
+   python app.py
+   ```
+   The app will be available at [http://localhost:5000](http://localhost:5000)
 
-## Game Mechanics
+## Gameplay
+- Each match shows two shiny Pokémon side-by-side.
+- Click on your favorite (or use keyboard shortcuts: `1`/`←` for left, `2`/`→` for right).
+- The winner advances to the next round.
+- Continue until only one Pokémon remains — the champion!
 
-- **Round 1**: All 151 Pokemon from the original games
-- **Subsequent Rounds**: Only Pokemon that were "passed" in the previous round
-- **Elimination**: Pokemon that are "smashed" are permanently removed
-- **Victory**: The last Pokemon standing wins!
+## Notes
+- If you get a `ModuleNotFoundError`, make sure your virtual environment is activated and dependencies are installed.
+- If you want to reset the tournament, use the "New Tournament" button in the UI.
 
-## Technical Details
-
-- **Backend**: Flask with RESTful API
-- **Frontend**: Vanilla JavaScript with modern CSS
-- **Data Source**: PokeAPI for Pokemon information
-- **State Management**: JSON file-based persistence
-- **Animations**: CSS transforms and transitions
-
-## API Endpoints
-
-- `GET /api/current-pokemon` - Get current Pokemon
-- `POST /api/pass-pokemon` - Pass current Pokemon
-- `POST /api/smash-pokemon` - Smash current Pokemon
-- `POST /api/next-round` - Start next round
-- `POST /api/reset-game` - Reset game state
-- `GET /api/game-state` - Get current game state
-
-Enjoy playing with your favorite Pokemon! 
+## License
+MIT 

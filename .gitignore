@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual environment
+venv/
+ENV/
+.env
+.venv
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# PyCharm
+.idea/
+
+# Flask
+instance/
+.webassets-cache
+
+# Logs
+*.log
+
+# Environment variables
+.env.*
+
+# Compiled files
+*.so
+
+# Test coverage
+htmlcov/
+.coverage
+.tox/
+.nox/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Misc
+*.sqlite3 
